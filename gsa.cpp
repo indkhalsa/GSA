@@ -6,19 +6,21 @@ using namespace std;
 int main()
 {
 	int a[50], b[50];
-	float fit_value[50], best, wrost;
+	float fit_value[50], best, wrost, mgi[50];
 	for(int i=0;i<50;i++)
 	{
 		int y, z;
-		float x;
 		y=rand()%11 - 5;
 		z=rand()%11 - 5;
 		a[i] = y;
 		b[i] = z;
-		x=4*y*y-2.1*y*y*y*y+1/3*y*y*y*y*y*y+y*z-4*z*z+4*z*z*z*z;
-		fit_value[i] = x;
 		cout<<i<<" no "<<a[i]<<"    "<<b[i]<<"   "<<fit_value[i]<<endl;
-
+	}
+	for(int i=0;i<50;i++)
+	{
+		float x;
+		x=4*a[i]*a[i]-2.1*a[i]*a[i]*a[i]*a[i]+1/3*a[i]*a[i]*a[i]*a[i]*a[i]*a[i]+a[i]*b[i]-4*b[i]*b[i]+4*b[i]*b[i]*b[i]*b[i];
+		fit_value[i] = x;
 	}
 	best = fit_value[0];
 	wrost = fit_value[0];
@@ -34,5 +36,13 @@ int main()
 		}
 	}	
 	cout<<"best="<<best<<"  wrost="<<wrost<<endl;
+	for(int i=0;i<50;i++)
+	{
+		float f_w, b_w;
+		f_w=fit_value[i]-wrost;
+		b_w=best-wrost;
+		mgi[i]=f_w/b_w;
+		cout<<i<<"    "<<mgi[i]<<endl;
+	}
 	return 0;
 }
