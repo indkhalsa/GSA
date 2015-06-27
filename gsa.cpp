@@ -1,12 +1,13 @@
 #include <iostream>
 #include <string>
 #include <stdlib.h>
+#include <math.h>
 using namespace std;
 
 int main()
 {
 	int a[50], b[50];
-	float fit_value[50], best, wrost, mgi[50];
+	double fit_value[50], best, wrost, mg[50], mgi[50], mgall, G[50], mj, Fij[50];
 	for(int i=0;i<50;i++)
 	{
 		int y, z;
@@ -14,13 +15,15 @@ int main()
 		z=rand()%11 - 5;
 		a[i] = y;
 		b[i] = z;
-		cout<<i<<" no "<<a[i]<<"    "<<b[i]<<"   "<<fit_value[i]<<endl;
+		cout<<i<<" no "<<i<<" a "<<a[i]<<" b "<<b[i]<<endl;
 	}
-	for(int i=0;i<50;i++)
+	for(int i=0;i<50;i++
+	)
 	{
-		float x;
+		double x;
 		x=4*a[i]*a[i]-2.1*a[i]*a[i]*a[i]*a[i]+1/3*a[i]*a[i]*a[i]*a[i]*a[i]*a[i]+a[i]*b[i]-4*b[i]*b[i]+4*b[i]*b[i]*b[i]*b[i];
 		fit_value[i] = x;
+		cout<<"fit value ["<<i<<"] "<<fit_value[i]<<endl;
 	}
 	best = fit_value[0];
 	wrost = fit_value[0];
@@ -38,11 +41,42 @@ int main()
 	cout<<"best="<<best<<"  wrost="<<wrost<<endl;
 	for(int i=0;i<50;i++)
 	{
-		float f_w, b_w;
+		double f_w, b_w;
 		f_w=fit_value[i]-wrost;
 		b_w=best-wrost;
-		mgi[i]=f_w/b_w;
-		cout<<i<<"    "<<mgi[i]<<endl;
+		mg[i]=f_w/b_w;
+		cout<<i<<"    "<<mg[i]<<endl;
+	}
+	for(int i=0;i<50;i++)
+	{
+		mgall = mgall+mg[i];
+	}
+	for(int i=0;i<50;i++)
+	{
+		double mge = mgall-mg[i];
+		mgi[i]=mg[i]/mge;
+		cout<<mgi[i]<<endl;
+	}
+	for(int i=0;i<50;i++)
+	{
+		double temp, temp2, temp3;
+		temp=i+1/50;
+		temp2=temp*-50;
+		temp3= exp (temp2);
+		G[i]=100*temp3;
+		cout<<"G["<<i<<"]= "<<G[i]<<endl;
+	}
+	for(int i=0;i<50;i++)
+	{
+		int temp=b[i]-a[i], temp2;
+		if(temp<0)
+		{
+			temp2=temp*-1;
+		}
+		temp2=temp+0.2; 
+		mj=mg[i]*mg[i]/temp2;
+		Fij[i]=G[i]*mj*temp;
+		cout<<"G["<<i+1<<"]= "<<Fij[i]<<endl;
 	}
 	return 0;
 }
