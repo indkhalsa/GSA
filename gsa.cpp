@@ -1,13 +1,14 @@
 #include <iostream>
-#include <string>
 #include <stdlib.h>
 #include <math.h>
+#include <cmath>
+
 using namespace std;
 
 int main()
 {
 	int a[50], b[50];
-	double fit_value[50], best, wrost, mg[50], mgi[50], mgall, G[50], mj, Fij[50];
+	double long fit_value[50], best, wrost, mg[50], mgi[50], mgall, G[50], mj, Fij[50], temp1, Fi[50], aj[50], vdi[50], xt[50];
 	for(int i=0;i<50;i++)
 	{
 		int y, z;
@@ -61,7 +62,7 @@ int main()
 	{
 		double temp, temp2, temp3;
 		temp=i+1/50;
-		temp2=temp*-50;
+		temp2=temp*-20;
 		temp3= exp (temp2);
 		G[i]=100*temp3;
 		cout<<"G["<<i<<"]= "<<G[i]<<endl;
@@ -73,10 +74,41 @@ int main()
 		{
 			temp2=temp*-1;
 		}
-		temp2=temp+0.2; 
+		temp2=temp2+0.2; 
 		mj=mg[i]*mg[i]/temp2;
 		Fij[i]=G[i]*mj*temp;
-		cout<<"G["<<i+1<<"]= "<<Fij[i]<<endl;
+		cout<<"Fij["<<i+1<<"]= "<<Fij[i]<<endl;
+	}
+	for(int i=0;i<50;i++)
+	{
+		float r = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		temp1=temp1+r;
+		cout<<r<<endl;
+	}
+	for(int i=0;i<50;i++)
+	{
+		double temp;
+		temp=temp1/50;
+		Fi[i]=temp*Fij[i];
+		cout<<"Fi" <<Fi[i]<<endl;
+	}
+	for(int i=0;i<50;i++)
+	{
+		aj[i]=Fi[i]/mgi[i];
+		cout<<"aj"<<aj[i]<<endl;
+	}
+	vdi[0]=0;
+	for(int i=0;i<50;i++)
+	{
+		float randv = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+		vdi[i+1]=randv*vdi[i]+aj[i];
+		cout<<"randm  "<<randv<<"  vdi "<<vdi[i]<<endl;
+	}
+	xt[0]=0;
+	for(int i=0;i<50;i++)
+	{
+		xt[i+1]=xt[i]+vdi[i];
+		cout<<"xt "<<xt<<endl;
 	}
 	return 0;
 }
